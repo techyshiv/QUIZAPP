@@ -130,7 +130,7 @@ EMAIL_VERIFICATION_APPLY=NO
 # How to run
 
 ```bash
-git clone
+git clone https://github.com/techyshiv/QUIZAPP.git
 cd QUIZAPP
 cd Backend
 pip3 install requirement.txt
