@@ -1,0 +1,148 @@
+{% extends 'base.html' %} {% block content %}
+<div class="wrapper">
+  <div class="quiz">
+    <div class="quiz_header">
+      <div class="quiz_user">
+        <h4>Welcome! <span class="name"></span></h4>
+      </div>
+      <div class="quiz_timer">
+        <span class="time">00:00</span>
+      </div>
+    </div>
+    <div class="quiz_body">
+      <div id="questions"></div>
+
+      <button class="btn-next" onclick="next()">Next Question</button>
+    </div>
+  </div>
+</div>
+<script>
+      // timer
+      let dt = new Date(new Date().setTime(0));
+      let ctime = dt.getTime();
+      let seconds = Math.floor((ctime % (1000 * 60)) / 1000);
+      let minutes = Math.floor((ctime % (1000 * 60 * 60)) / (1000 * 60));
+      console.log(seconds, minutes);
+      let time = 0;
+      let mytime = setInterval(function () {
+          time++;
+
+          if (seconds < 59) {
+              seconds++;
+          } else {
+              seconds = 0;
+              minutes++;
+          }
+          let formatted_sec = seconds < 10 ? `0${seconds}` : `${seconds}`;
+          let formatted_min = minutes < 10 ? `0${minutes}` : `${minutes}`
+          document.querySelector("span.time").innerHTML = `${formatted_min} : ${formatted_sec}`;
+      }, 1000);
+
+      window.onload = function () {
+          show(question_count);
+
+      };
+
+      console.log("Flask get Data")
+      console.log({{data|tojson}})
+      questions={{data|tojson}}
+      let question_count = 0;
+      let points = 0;
+      let answers=[]
+      function next(){
+        let user_answer = document.querySelector("li.option.active").innerHTML;
+        answers.push({
+          "question_id":questions[question_count]['id'],
+          "answer":user_answer
+        })
+        if (question_count == questions.length - 1) {
+            clearInterval(mytime);
+            console.log("Final Answers")
+            console.log(answers)
+            // send data to backend;
+            $.ajax({
+              type: "POST",
+              data: JSON.stringify(answers),
+              contentType: "application/json",
+              url: "http://localhost:5000/quiz",
+              success: function (response) {
+                console.log("received response !!");
+                console.log(response)
+                response=eval(response)
+                let points=response['message']
+                let time_taken=String(minutes)+" minutes "+String(seconds)+" seconds"
+                let username=sessionStorage.getItem('name')
+                // let username="Shivang"
+                console.log(response)
+                  Swal.fire(
+                      'Success !',
+                      'Yoo! Quiz Submit Successfully!!',
+                      'success'
+                  ).then(function () {
+                      window.location = `http://localhost:5000/quiz?points=${points}&time_taken=${time_taken}&username=${username}`
+                  })
+              },
+              error: function (err) {
+                  if (err.status == 409) {
+                      Swal.fire(
+                          'Warning !',
+                          'Email Address already Exist !!',
+                          'error'
+                      )
+                      return false;
+                  }
+
+                  if (err.status == 403) {
+                      Swal.fire(
+                          'Warning !',
+                          'Request Payload is Not Valid !!',
+                          'error'
+                      )
+                      return false;
+                  }
+              }
+          });
+            // location.href = "end";
+        }
+        console.log(question_count);
+        question_count++;
+        show(question_count);
+      }
+
+      function show(count){
+        let question = document.getElementById("questions");
+        let [first, second, third, fourth] = questions[count].options;
+
+        question.innerHTML = `
+        <h2>Q${count + 1}. ${questions[count].question}</h2>
+        <ul class="option_group">
+          <li class="option">${first}</li>
+          <li class="option">${second}</li>
+          <li class="option">${third}</li>
+          <li class="option">${fourth}</li>
+        </ul>
+        `;
+        toggleActive();
+      }
+
+      function toggleActive() {
+        let option = document.querySelectorAll("li.option");
+        for (let i = 0; i < option.length; i++) {
+            option[i].onclick = function () {
+                for (let i = 0; i < option.length; i++) {
+                    if (option[i].classList.contains("active")) {
+                        option[i].classList.remove("active");
+                    }
+                }
+                option[i].classList.add("active");
+            };
+        }
+    }
+    function submitForm(e) {
+      e.preventDefault();
+      let name = document.forms["welcome_form"]["name"].value;
+      sessionStorage.setItem("name", name);
+      location.href = "quiz";
+  }
+</script>
+{% endblock %}

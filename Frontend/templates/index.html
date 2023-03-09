@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<div class="wrapper">
+  <div class="welcome_text">
+    <form class="welcome_form" name="welcome_form" onsubmit="submitForm(event)">
+      <input type="text" name="user_name" id="user_name" value="{{username}}" />
+      <button>Start Quiz</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

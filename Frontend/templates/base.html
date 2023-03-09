@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Quiz Web APP</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="{{ url_for('static',filename='css/style.css') }}"
+      rel="stylesheet"
+    />
+    <meta name="author" content="Shivang Saxena" />
+    <meta name="keywords" content="Quiz Web in Python,Quiz Web in Javascript" />
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+    <script src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/sweetalert.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/style.js') }}"></script>
+  </body>
+</html>

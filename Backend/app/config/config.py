@@ -1,0 +1,15 @@
+from dotenv import load_dotenv
+import os
+load_dotenv()
+APP_PORT = os.getenv("APP_PORT")
+DEBUG_MODE = os.getenv("DEBUG_MODE")
+DB_URL = os.getenv("DB_URL")
+JWT_SECRET = os.getenv("JWT_SECRET")
+REFRESH_SECRET = os.getenv("REFRESH_SECRET")
+APP_URL = os.getenv("APP_URL")
+SECRET_KEY = os.getenv("SECRET_KEY")
+ACCESS_TOKEN_TIMEOUT = os.getenv("ACCESS_TOKEN_TIMEOUT")
+REFRESH_TOKEN_TIMEOUT = os.getenv("REFRESH_TOKEN_TIMEOUT")
+SENDER_EMAIL = os.getenv("SENDER_EMAIL")
+EMAIL_TOKEN = os.getenv("EMAIL_TOKEN")
+EMAIL_VERIFICATION_APPLY = os.getenv("EMAIL_VERIFICATION_APPLY")
