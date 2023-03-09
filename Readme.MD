@@ -107,12 +107,13 @@ REFRESH_TOKEN_TIMEOUT=400
 SECRET_KEY=*******************
 EMAIL_TOKEN=*************
 EMAIL_VERIFICATION_APPLY=NO
+SENDER_EMAIL=********************
 ```
 
 # Note
 
 - EMAIL_TOKEN is required so that Email can be forward
-- Replace **\*\*** with some strong secret Key
+- Replace **\*\*** with Appropriate Values
 - If you don't want EMAIL Verification then put it as NO otherwise make it YES
 - When it set NO then no need to check email for verification ignore the message of Verification Link send to Email Address after being successfully Registered Yourself.
 - Make APP_URL Default localhost and PORT 5000. If you want to you can change it but also you have to change in Some HTML file as well.
