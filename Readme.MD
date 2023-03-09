@@ -128,6 +128,24 @@ SENDER_EMAIL=********************
     Quiz
     	[+] : http://localhost:5000/quiz
 
+    Question
+    	[+] : http://locahost:5000/question
+    	Data Format : JSON
+    	[
+    		{
+    		id: 1,
+    		question: "What is the full form of RAM ?",
+    		answer: "Random Access Memory",
+    		options: [
+    			"Random Access Memory",
+    			"Randomely Access Memory",
+    			"Run Aceapt Memory",
+    			"None of these"
+    		]
+    		},
+
+    	];
+
 # How to run
 
 ```bash
