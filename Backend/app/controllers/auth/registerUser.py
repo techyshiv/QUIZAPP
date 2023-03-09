@@ -115,7 +115,7 @@ class ResendEmail(MethodView):
                 print("email verify link :", email_verify_link)
                 if isinstance(email_verify_link, str):
                     task = Thread(target=email.send, kwargs=({
-                        "receiver_email": ["1616510104@kit.ac.in"],
+                        "receiver_email": [user_email],
                         "email": "support@myblog.com",
                         "number": "9621299170",
                         "verify_link": email_verify_link,
